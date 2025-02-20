@@ -11,14 +11,13 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-        // Create virtual environment
+                // Create virtual environment
                 sh 'python3 -m venv venv'
-        // Activate virtual environment and install dependencies
-                sh 'source venv/bin/activate && pip install -r requirements.txt'
+                // Use Bash to activate the virtual environment and install dependencies
+                sh 'bash -c "source venv/bin/activate && pip install -r requirements.txt"'
             }
         }
-
-        
+       
         stage('Run Tests') {
             steps {
                 // Run tests inside the virtual environment
