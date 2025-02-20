@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout Repository') {
             steps {
                 // Correct the repository URL
-                git 'branch: 'main', url: 'https://github.com/Pradhisha-N/jenkins2.git'
+                git(url: 'https://github.com/Pradhisha-N/jenkins2.git', branch: 'main')
             }
         }
         
