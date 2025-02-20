@@ -4,31 +4,37 @@ pipeline {
     stages {
         stage('Checkout Repository') {
             steps {
-                // Correct the repository URL
+                // Correctly specify the branch in the git step
                 git(url: 'https://github.com/Pradhisha-N/jenkins2.git', branch: 'main')
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                // Set up a virtual environment
+                sh 'python3 -m venv venv'  // Create a virtual environment
+                sh 'source venv/bin/activate'  // Activate the virtual environment
+                sh 'pip install -r requirements.txt'  // Install dependencies in the virtual environment
             }
         }
         
         stage('Run Tests') {
             steps {
-                sh 'pytest tests/'
+                // Run tests inside the virtual environment
+                sh 'source venv/bin/activate && pytest tests/'
             }
         }
 
         stage('Build Artifact') {
             steps {
-                sh 'python setup.py sdist'
+                // Build the artifact inside the virtual environment
+                sh 'source venv/bin/activate && python setup.py sdist'
             }
         }
 
         stage('Archive Artifact') {
             steps {
+                // Archive the artifact
                 archiveArtifacts artifacts: 'dist/*.tar.gz', fingerprint: true
             }
         }
